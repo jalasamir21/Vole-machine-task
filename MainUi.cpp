@@ -28,7 +28,7 @@ void MainUi::displayMenu() {
         cout << "2. Display State\n";
         cout << "3. Enter Instruction\n";
         cout << "4. Execute Program\n";
-        cout << "4. Exit\n";
+        cout << "5. Exit\n";
         cout << "Enter your choice: ";
         c = inputChoice();
         string instruction;
@@ -46,8 +46,12 @@ void MainUi::displayMenu() {
                 break;
             case '4':
                 machine.outputstate();
-
                 break;
+            case '5':
+                exit(0);
+
+
+
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;

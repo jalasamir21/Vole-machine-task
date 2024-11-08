@@ -2,10 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "untitled6.exe"
-		},
-		{
-			"path" : "untitled6.pdb"
+			"path" : "untitled6"
 		}
 	],
 	"backtrace" : 1,
@@ -38,7 +35,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -fdiagnostics-color=always"
+					"fragment" : "-g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.5 -fcolor-diagnostics"
 				}
 			],
 			"language" : "CXX",
@@ -75,16 +72,12 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
-			},
-			{
-				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
-				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "untitled6",
-	"nameOnDisk" : "untitled6.exe",
+	"nameOnDisk" : "untitled6",
 	"paths" : 
 	{
 		"build" : ".",

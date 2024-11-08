@@ -8,7 +8,7 @@
 void Machine::loadProgramFile(vector<string>& instructions) {
     fstream file;
     string line;
-    cout << "Enter filename";
+    cout << "Enter filename: ";
     string filename;
     cin >> filename;
     file.open(filename, ios::in);

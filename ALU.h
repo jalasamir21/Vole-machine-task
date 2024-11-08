@@ -14,13 +14,20 @@ class ALU {
 
 
 public:
-    int hexToDec(string value);
+    int hexToDec(string hexVal);
     string decToHex(int value);
     bool isValid(string value);
     void add(int x1, int x2, int x3, Register& reg);
     void jump(int regIdx, int memAddress, Register &reg, int &instructionPointer);
-
-
+    float prepareAddFloat(string hexValue);
+    int prepareAdd(string hexValue);
+    string integerToBin(int integer);
+    string fractToBin(float fractionalValue);
+    int hexFormat(char hexChar);
+    string floatToBin(float floatValue);
+    string add(string hexA, string hexB);
+    string decToBin(int dec);
+    string addFloat(string hexA, string hexB);
     void execute(string &instruction, Register &reg, Memory &memory, int instructionPointer);
 
     void rotate(int regIdx, int numBits, Register &reg);

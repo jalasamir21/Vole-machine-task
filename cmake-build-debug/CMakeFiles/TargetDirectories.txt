@@ -1,3 +1,3 @@
-C:/untitled6/cmake-build-debug/CMakeFiles/untitled6.dir
-C:/untitled6/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/untitled6/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ahmedatef/CLionProjects/Vole-machine-task/cmake-build-debug/CMakeFiles/untitled6.dir
+/Users/ahmedatef/CLionProjects/Vole-machine-task/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ahmedatef/CLionProjects/Vole-machine-task/cmake-build-debug/CMakeFiles/rebuild_cache.dir

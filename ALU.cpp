@@ -43,130 +43,7 @@ int ALU::hexToDec(string hexVal) {
     return dec_val;
 
 }
-float ALU::prepareAddFloat(string hexValue) {
-    int decimalValue = hexToDec(hexValue);
-    if (decimalValue <= 15) {
-        string binaryValue = decToBin(decimalValue);
-        while (binaryValue.length() < 4) {
-            binaryValue = "0" + binaryValue;
-        }
-        string binaryRep = "0.0000" + binaryValue;
-        float sumOfFloats = 0.0;
-        int exponent = -5;
 
-        for (int i = 6; i < binaryRep.length(); i++) {
-            if (binaryRep[i] == '1') {
-                sumOfFloats += pow(2, exponent);
-            }
-            exponent--;
-        }
-        return sumOfFloats;
-    } else {
-        char firstChar = hexValue[0];
-        char secondChar = hexValue[1];
-        int firstDecimal = hexFormat(firstChar);
-        int secondDecimal = hexFormat(secondChar);
-        if (firstDecimal <= 7) {
-            int exponent = firstDecimal - 4;
-            if (exponent <= 0) {
-                exponent = -exponent;
-                string binaryRep = "0.";
-                for (int i = 0; i < exponent; i++) {
-                    binaryRep+= "0";
-                }
-                string binaryValue = decToBin(secondDecimal);
-                while (binaryValue.length() < 4) {
-                    binaryValue = "0" + binaryValue;
-                }
-                binaryRep += binaryValue;
-                float sum = 0;
-                int c = 0;
-                for (int i = 0; i < binaryRep.length(); i++) {
-                    if (binaryRep[i] == '1') {
-                        sum += pow(2, c);
-                        c--;
-                    } else if (binaryRep[i] == '.') {
-                        continue;
-                    } else {
-                        c--;
-                    }
-                }
-                return sum;
-            } else {
-                string binaryValue = decToBin(secondDecimal);
-                while (binaryValue.length() < 4) {
-                    binaryValue = "0" + binaryValue;
-                }
-                string binaryRepresentation = "0." + binaryValue;
-                int c = exponent;
-                float sum = 0;
-                for (int i = 0; i < binaryRepresentation.length(); i++) {
-                    if (binaryRepresentation[i] == '1') {
-                        sum += pow(2, c);
-                        c--;
-                    } else if (binaryRepresentation[i] == '.') {
-                        continue;
-                    } else {
-                        c--;
-                    }
-                }
-                return sum;
-            }
-        } else {
-            string binaryValue = decToBin(firstDecimal);
-            string binaryRepresentation;
-            for (int i = 1; i < binaryValue.length(); i++) {
-                binaryRepresentation += binaryValue[i];
-            }
-            int exponent = firstDecimal - 8;
-            int adjustedExponent = exponent - 4;
-            if (adjustedExponent <= 0) {
-                adjustedExponent = -adjustedExponent;
-                string binaryRepresentation = "0.";
-                for (int i = 0; i < adjustedExponent; i++) {
-                    binaryRepresentation += "0";
-                }
-                string binaryValue = decToBin(secondDecimal);
-                while (binaryValue.length() < 4) {
-                    binaryValue = "0" + binaryValue;
-                }
-                binaryRepresentation += binaryValue;
-                float sum = 0;
-                int c = 0;
-                for (int i = 0; i < binaryRepresentation.length(); i++) {
-                    if (binaryRepresentation[i] == '1') {
-                        sum += pow(2, c);
-                        c--;
-                    } else if (binaryRepresentation[i] == '.') {
-                        continue;
-                    } else {
-                        c--;
-                    }
-                }
-                return -sum;
-            } else {
-                string binaryValue = decToBin(secondDecimal);
-                while (binaryValue.length() < 4) {
-                    binaryValue = "0" + binaryValue;
-                }
-                string binaryRepresentation = "0." + binaryValue;
-                int c = adjustedExponent;
-                float sum = 0;
-                for (int i = 0; i < binaryRepresentation.length(); i++) {
-                    if (binaryRepresentation[i] == '1') {
-                        sum += pow(2, c);
-                        c--;
-                    } else if (binaryRepresentation[i] == '.') {
-                        continue;
-                    } else {
-                        c--;
-                    }
-                }
-                return -sum;
-            }
-        }
-    }
-}
 string ALU::add(string hexA, string hexB) {
     int decimalA = prepareAdd(hexA);
     int decimalB = prepareAdd(hexB);
@@ -290,134 +167,6 @@ string ALU::floatToBin(float floatValue) {
     string binFract = fractToBin(fractionalPart);
     return binInt + "." + binFract;
 }
-string ALU::addFloat(string hexA, string hexB) {
-    float floatA = prepareAddFloat(hexA);
-    float floatB = prepareAddFloat(hexB);
-    float sum = floatA + floatB;
-    cout << sum << endl;
-    int exponent = 0;
-    if (sum >= 1) {
-        string binarySum = floatToBin(sum);
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (binarySum[i] == '.') {
-                exponent = i;
-            }
-        }
-        exponent += 4;
-        string hexExponent = decToHex(exponent);
-        int c = 0;
-        int result = 0;
-        int power = 3;
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (c == 4) {
-                break;
-            } else if (binarySum[i] == '.') {
-                continue;
-            } else {
-                if (binarySum[i] == '1') {
-                    result += pow(2, power);
-                }
-                c++;
-                power--;
-            }
-        }
-        hexExponent += decToHex(result);
-        return hexExponent;
-    } else if (sum <= -1) {
-        sum = -sum;
-        string binarySum = floatToBin(sum);
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (binarySum[i] == '.') {
-                exponent = i;
-            }
-        }
-        exponent += 4;
-        string binaryExponent = "1" + decToBin(exponent);
-        int result = 0;
-        int power = 3;
-        for (int i = 0; i < 4; i++) {
-            if (binaryExponent[i] == '1') {
-                result += pow(2, power);
-            }
-            power--;
-        }
-
-        string hexExponent = decToHex(result);
-        int c = 0;
-        result = 0;
-        power = 3;
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (c == 4) {
-                break;
-            } else if (binarySum[i] == '.') {
-                continue;
-            } else {
-                if (binarySum[i] == '1') {
-                    result += pow(2, power);
-                }
-                c++;
-                power--;
-            }
-        }
-        hexExponent += decToHex(result);
-        return hexExponent;
-    } else if ((sum > 0) && (sum < 1)) {
-        string binarySum = floatToBin(sum);
-        int firstOneIndex = 0;
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (binarySum[i] == '1') {
-                firstOneIndex = i;
-                break;
-            }
-        }
-        int exponent = firstOneIndex - 2;
-        exponent = -exponent;
-        exponent += 4;
-        if (exponent < 0) {
-            exponent = 0;
-        }
-        string hexExponent = decToHex(exponent);
-        int result = 0;
-        int power = 3;
-        for (int i = firstOneIndex; i < (firstOneIndex + 4); i++) {
-            if (binarySum[i] == '1') {
-                result += pow(2, power);
-            }
-            power--;
-        }
-        hexExponent += decToHex(result);
-        return hexExponent;
-    } else {
-        sum = -sum;
-        string binarySum = floatToBin(sum);
-        int firstOneIndex = 0;
-        for (int i = 0; i < binarySum.length(); i++) {
-            if (binarySum[i] == '1') {
-                firstOneIndex = i;
-                break;
-            }
-        }
-        int exponent = firstOneIndex - 2;
-        exponent = -exponent;
-        exponent += 4;
-        if (exponent < 0) {
-            exponent = 0;
-        }
-        exponent += 8;
-        string hexExponent = decToHex(exponent);
-        int result = 0;
-        int power = 3;
-        for (int i = firstOneIndex; i < (firstOneIndex + 4); i++) {
-            if (binarySum[i] == '1') {
-                result += pow(2, power);
-            }
-            power--;
-        }
-        hexExponent += decToHex(result);
-        return hexExponent;
-    }
-}
-
 
 string ALU::decToHex(int vALUe) {
     string hexa = "";
@@ -557,12 +306,23 @@ void ALU::move(int destinationIdx, int srcIdx, Register &reg)
 }
 
 
-void ALU::addFloat(int destinationIdx, int srcIdx1, int srcIdx2, Register &reg)
-{
-    string hexA = decToHex(reg.getCell(srcIdx1));
-    string hexB = decToHex(reg.getCell(srcIdx2));
-    string result = addFloat(hexA, hexB);
-    reg.setCell(destinationIdx, hexToDec(result));
+void ALU::addFloat(int destinationIdx, int srcIdx1, int srcIdx2, Register &reg) {
+    // Get the bit patterns from the registers
+    int bitPattern1 = reg.getCell(srcIdx1);
+    int bitPattern2 = reg.getCell(srcIdx2);
+
+    // Interpret the bit patterns as floating-point values
+    float floatVal1 = *reinterpret_cast<float*>(&bitPattern1);
+    float floatVal2 = *reinterpret_cast<float*>(&bitPattern2);
+
+    // Perform the floating-point addition
+    float result = floatVal1 + floatVal2;
+
+    // Convert the result back to a bit pattern
+    int resultBitPattern = *reinterpret_cast<int*>(&result);
+
+    // Store the result bit pattern in the destination register
+    reg.setCell(destinationIdx, resultBitPattern);
 }
 
 void ALU::Or(int destinationIdx, int srcIdx1, int srcIdx2, Register &reg)
